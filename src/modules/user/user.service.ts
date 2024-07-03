@@ -7,19 +7,19 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-
+  constructor( @InjectRepository(User) private readonly userRepository: Repository<User>, ) {} 
   
   create(createUserDto: CreateUserDto) {
     const user: User = new User();
     user.nickname = createUserDto.nickname;
     
-    return user.save();
+    return this.userRepository.save(user); 
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(): Promise<User[]> { 
+    return this.userRepository.find(); 
   }
-
+  
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }

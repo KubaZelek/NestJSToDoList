@@ -17,7 +17,7 @@ export class Task {
   isDone: boolean;
 
   @Column({name: "datetime"})
-  datetime: string;
+  datetime: Date;
 
   @Column()
   userId: number;  

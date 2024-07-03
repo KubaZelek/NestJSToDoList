@@ -16,19 +16,25 @@ export class UserService {
     return this.userRepository.save(user); 
   }
 
-  findAll(): Promise<User[]> { 
-    return this.userRepository.find(); 
-  }
-  
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findAll():Promise<User[]> { 
+
+    const cos =await this.userRepository.find();
+    return cos
+
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findOne(id: number) {
+    const fO = await this.userRepository.findOneBy({id});
+    return fO.nickname;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    async  update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.userRepository.findOneBy({id});
+    user.nickname = updateUserDto.nickname;
+    return this.userRepository.save(user);
+  }
+
+  async remove(id: number) {
+    return this.userRepository.delete({ id });
   }
 }

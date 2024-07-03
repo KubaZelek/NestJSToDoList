@@ -17,10 +17,7 @@ export class UserService {
   }
 
   async findAll():Promise<User[]> { 
-
-    const cos =await this.userRepository.find();
-    return cos
-
+    return this.userRepository.find();
   }
 
   async findOne(id: number) {

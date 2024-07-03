@@ -10,29 +10,29 @@ export class TaskService {
   constructor( @InjectRepository(Task) private readonly taskRepository: Repository<Task>, ) {} 
   
   create(createTaskDto: CreateTaskDto) {
-    const task: Task = new Task();
-    task.title = createTaskDto.title;
-    task.description = createTaskDto.description;
-    task.isDone = createTaskDto.isDone;
-    task.datetime = createTaskDto.datetime;
-    task.userId = createTaskDto.userId;
-    task.catId = createTaskDto.catId;
-    
-    return this.taskRepository.save(task); 
+    return this.taskRepository.save(createTaskDto); 
   }
-  findAll() {
-    return `This action returns all task`;
+  async findAll():Promise<Task[]> { 
+    return this.taskRepository.find();
+  }
+  async findOne(id: number) {
+    return await this.taskRepository.findOneBy({id});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} task`;
+
+  async  update(id: number, updateTaskDto: UpdateTaskDto) {
+    const task = await this.taskRepository.findOneBy({id});
+    task.title = updateTaskDto.title;
+    task.description = updateTaskDto.description;
+    task.catId = updateTaskDto.catId;
+    task.datetime = updateTaskDto.datetime;
+    task.userId = updateTaskDto.userId;
+    task.isDone = updateTaskDto.isDone;
+    return this.taskRepository.save(task);
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return `This action updates a #${id} task`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} task`;
+  async remove(id: number) {
+    return this.taskRepository.delete({ id });
   }
 }

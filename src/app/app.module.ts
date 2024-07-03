@@ -3,6 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TaskModule } from '../modules/task/task.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoryModule } from 'src/modules/category/category.module';
+import { UserModule } from 'src/modules/user/user.module';
 
 
 @Module({
@@ -15,7 +17,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     database: 'todo_list',
     entities: ["**/*.entity.js"],
     synchronize: false,
-  }), TaskModule] ,
+  }), TaskModule, CategoryModule, UserModule] ,
   controllers: [AppController],
   providers: [AppService],
 })
